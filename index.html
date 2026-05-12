@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bufete Velázquez — Abogados en Madrid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1C2B4A;
+      --dark: #2C2C2C;
+      --gold: #B8960C;
+      --gold-light: #D4A800;
+      --white: #FFFFFF;
+      --cream: #F8F6F0;
+      --gray: #EEECE6;
+      --text: #2C2C2C;
+      --text-light: #5A5A5A;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Source Sans Pro', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(28,43,74,0.97);
+      backdrop-filter: blur(10px);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 30px rgba(0,0,0,0.3); }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .nav-logo-mark {
+      width: 38px; height: 38px;
+      background: var(--gold);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-mark svg { width: 22px; height: 22px; stroke: var(--white); fill: none; stroke-width: 2; }
+    .nav-logo-text {
+      font-family: 'Merriweather', serif;
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--white); line-height: 1.2;
+    }
+    .nav-logo-text span { display: block; font-size: 0.65rem; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 2px; text-transform: uppercase; margin-top: 1px; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: rgba(255,255,255,0.75); font-size: 0.88rem; font-weight: 600; letter-spacing: 0.5px; transition: color 0.2s; text-transform: uppercase; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      border: 1.5px solid var(--gold); color: var(--gold);
+      padding: 0.55rem 1.3rem; border-radius: 4px;
+      font-size: 0.85rem; font-weight: 700; text-decoration: none;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--navy); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--white); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(to right, rgba(28,43,74,0.95) 50%, rgba(28,43,74,0.65) 100%),
+        url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80') center/cover no-repeat;
+      display: flex; align-items: center;
+      padding: 100px 5% 60px;
+    }
+    .hero-content { max-width: 680px; color: var(--white); }
+    .hero-divider {
+      width: 60px; height: 3px; background: var(--gold);
+      margin-bottom: 2rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(2rem, 4.5vw, 3.4rem);
+      font-weight: 900; line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .hero p {
+      font-size: 1.1rem; line-height: 1.8;
+      color: rgba(255,255,255,0.85);
+      max-width: 520px; margin-bottom: 2.5rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-gold {
+      background: var(--gold); color: var(--navy);
+      padding: 0.9rem 2.2rem; border-radius: 4px;
+      font-weight: 700; font-size: 0.9rem; text-decoration: none;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-ghost {
+      border: 1.5px solid rgba(255,255,255,0.5); color: var(--white);
+      padding: 0.9rem 2.2rem; border-radius: 4px;
+      font-weight: 600; font-size: 0.9rem; text-decoration: none;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: var(--white); }
+    .hero-tags {
+      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+    }
+    .hero-tag {
+      background: rgba(184,150,12,0.15);
+      border: 1px solid rgba(184,150,12,0.3);
+      color: var(--gold); padding: 0.35rem 0.9rem;
+      border-radius: 3px; font-size: 0.78rem;
+      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    /* PRACTICE AREAS */
+    .areas {
+      padding: 6rem 5%;
+      background: var(--cream);
+    }
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-tag {
+      display: inline-block;
+      color: var(--gold); font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px;
+      margin-bottom: 0.8rem;
+    }
+    .section-header h2 {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 700; color: var(--navy);
+      line-height: 1.25;
+    }
+    .section-header p { color: var(--text-light); margin-top: 0.8rem; font-size: 1rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+    }
+    .area-card {
+      background: var(--white);
+      border: 1px solid rgba(28,43,74,0.08);
+      border-top: 3px solid transparent;
+      border-radius: 4px; padding: 2rem;
+      transition: border-top-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .area-card:hover {
+      border-top-color: var(--gold);
+      box-shadow: 0 8px 30px rgba(28,43,74,0.1);
+      transform: translateY(-3px);
+    }
+    .area-icon {
+      width: 48px; height: 48px;
+      background: rgba(28,43,74,0.06);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.2rem; border-radius: 4px;
+    }
+    .area-icon svg { width: 24px; height: 24px; stroke: var(--navy); fill: none; stroke-width: 1.5; }
+    .area-card h3 {
+      font-family: 'Merriweather', serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 0.6rem;
+    }
+    .area-card p { font-size: 0.9rem; color: var(--text-light); line-height: 1.65; }
+
+    /* FIRM */
+    .firm {
+      padding: 6rem 5%;
+      background: var(--navy);
+      color: var(--white);
+    }
+    .firm-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.2fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+    .firm-content .section-header { text-align: left; }
+    .firm-content .section-header h2 { color: var(--white); }
+    .firm-content .section-header p { color: rgba(255,255,255,0.7); margin-left: 0; }
+    .firm-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem; margin-top: 2.5rem;
+    }
+    .firm-stat { border-left: 3px solid var(--gold); padding-left: 1rem; }
+    .firm-stat-number {
+      font-family: 'Merriweather', serif;
+      font-size: 2.2rem; font-weight: 900; color: var(--gold);
+    }
+    .firm-stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 0.2rem; }
+    .firm-image {
+      position: relative; border-radius: 4px; overflow: hidden;
+      height: 500px;
+    }
+    .firm-image img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); }
+    .firm-image-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(28,43,74,0.8));
+      padding: 2rem 1.5rem 1.5rem;
+      color: var(--white);
+    }
+    .firm-image-overlay h4 { font-family: 'Merriweather', serif; font-size: 1rem; }
+    .firm-image-overlay p { font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 0.2rem; }
+
+    /* PROCESS */
+    .process {
+      padding: 6rem 5%;
+      background: var(--white);
+    }
+    .process-steps {
+      max-width: 900px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: ''; position: absolute;
+      left: 30px; top: 40px; bottom: 40px;
+      width: 2px; background: var(--gray);
+    }
+    .process-step {
+      display: flex; gap: 2rem;
+      padding: 1.5rem 0; position: relative; z-index: 1;
+    }
+    .step-number {
+      min-width: 60px; height: 60px;
+      background: var(--navy); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Merriweather', serif;
+      font-size: 1.2rem; font-weight: 900; color: var(--gold);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--navy);
+    }
+    .step-content { padding-top: 0.8rem; }
+    .step-content h3 { font-family: 'Merriweather', serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+    .step-content p { font-size: 0.92rem; color: var(--text-light); line-height: 1.65; max-width: 600px; }
+
+    /* CONTACT */
+    .contact {
+      padding: 6rem 5%;
+      background: var(--cream);
+    }
+    .contact-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.2fr;
+      gap: 4rem; align-items: start;
+    }
+    .contact-info h2 {
+      font-family: 'Merriweather', serif;
+      font-size: 1.9rem; font-weight: 700; color: var(--navy);
+      line-height: 1.3; margin-bottom: 1rem;
+    }
+    .contact-info p { color: var(--text-light); line-height: 1.7; margin-bottom: 2rem; font-size: 0.95rem; }
+    .contact-detail { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .contact-detail svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 2; margin-top: 2px; flex-shrink: 0; }
+    .contact-detail a, .contact-detail span { color: var(--text); text-decoration: none; font-size: 0.93rem; line-height: 1.5; }
+    .contact-detail a:hover { color: var(--navy); }
+    .contact-form {
+      background: var(--navy); padding: 2.5rem; border-radius: 4px;
+      color: var(--white);
+    }
+    .contact-form h3 { font-family: 'Merriweather', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--white); }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.4rem; color: rgba(255,255,255,0.7); letter-spacing: 0.5px; text-transform: uppercase; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 0.8rem 1rem;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      font-family: 'Source Sans Pro', sans-serif; font-size: 0.9rem;
+      color: var(--white); background: rgba(255,255,255,0.08);
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.35); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+    .form-group select option { background: var(--navy); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      width: 100%; padding: 1rem;
+      background: var(--gold); color: var(--navy);
+      border: none; border-radius: 4px;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .confidentiality {
+      margin-top: 0.8rem; font-size: 0.78rem;
+      color: rgba(255,255,255,0.4); text-align: center;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0F1929; color: rgba(255,255,255,0.4);
+      padding: 2rem 5%;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem; font-size: 0.82rem;
+    }
+    .footer-logo-text {
+      font-family: 'Merriweather', serif; font-weight: 700;
+      color: var(--white); font-size: 0.95rem;
+    }
+    footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .firm-inner, .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .firm-image { height: 280px; }
+      .firm-stats { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .process-steps::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="nav-logo-text">
+        Bufete Velázquez
+        <span>Abogados · Madrid</span>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#areas">Áreas</a></li>
+      <li><a href="#despacho">El Despacho</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="tel:+34915901009" class="nav-cta">Consulta gratuita</a>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Despacho de abogados en Madrid</div>
+      <div class="hero-divider"></div>
+      <h1>Defensa jurídica<br />de excelencia<br />en el centro de Madrid</h1>
+      <p>Más de 30 años asesorando a particulares y empresas con la máxima discreción, rigor y eficacia. Resultados probados en los principales juzgados y tribunales de España.</p>
+      <div class="hero-actions">
+        <a href="#contacto" class="btn-gold">Consulta gratuita</a>
+        <a href="tel:+34915901009" class="btn-ghost">91 590 10 09</a>
+      </div>
+      <div class="hero-tags">
+        <span class="hero-tag">Civil</span>
+        <span class="hero-tag">Mercantil</span>
+        <span class="hero-tag">Laboral</span>
+        <span class="hero-tag">Familia</span>
+        <span class="hero-tag">Penal</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- AREAS -->
+  <section id="areas" class="areas">
+    <div class="section-header">
+      <span class="section-tag">Áreas de práctica</span>
+      <h2>Asesoramiento jurídico integral</h2>
+      <p>Nuestro equipo de abogados especialistas cubre todas las ramas del Derecho con profundo conocimiento y experiencia acreditada.</p>
+    </div>
+    <div class="areas-grid">
+      <div class="area-card">
+        <div class="area-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Derecho de Familia</h3>
+        <p>Divorcios, separaciones, custodia de menores, herencias y testamentos. Acompañamiento humano en momentos delicados.</p>
+      </div>
+      <div class="area-card">
+        <div class="area-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        </div>
+        <h3>Derecho Mercantil</h3>
+        <p>Constitución de sociedades, contratos mercantiles, M&A, concursos de acreedores y reestructuraciones empresariales.</p>
+      </div>
+      <div class="area-card">
+        <div class="area-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Derecho Penal</h3>
+        <p>Defensa en toda clase de procesos penales. Experiencia en delitos económicos, contra la persona y tráfico de drogas.</p>
+      </div>
+      <div class="area-card">
+        <div class="area-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        </div>
+        <h3>Derecho Inmobiliario</h3>
+        <p>Compraventas, arrendamientos, reclamaciones de comunidades y desahucios. Protección de sus intereses como propietario o inquilino.</p>
+      </div>
+      <div class="area-card">
+        <div class="area-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        </div>
+        <h3>Derecho Laboral</h3>
+        <p>Despidos, ERE, reclamaciones salariales, negociación colectiva y conflictos laborales. Representación ante la Inspección de Trabajo.</p>
+      </div>
+      <div class="area-card">
+        <div class="area-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Extranjería e Inmigración</h3>
+        <p>Permisos de residencia y trabajo, nacionalidad española, asilo y protección internacional. Tramitación completa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIRM -->
+  <section id="despacho" class="firm">
+    <div class="firm-inner">
+      <div class="firm-content">
+        <div class="section-header">
+          <span class="section-tag">El Despacho</span>
+          <h2>Tradición jurídica,<br />visión contemporánea</h2>
+          <p>Fundado en 1993, Bufete Velázquez es uno de los despachos de referencia en Madrid. Nuestro equipo de letrados combina sólida formación académica con experiencia práctica en los principales tribunales del país.</p>
+        </div>
+        <div class="firm-stats">
+          <div class="firm-stat">
+            <div class="firm-stat-number">+30</div>
+            <div class="firm-stat-label">Años de trayectoria</div>
+          </div>
+          <div class="firm-stat">
+            <div class="firm-stat-number">+2000</div>
+            <div class="firm-stat-label">Clientes asesorados</div>
+          </div>
+          <div class="firm-stat">
+            <div class="firm-stat-number">15</div>
+            <div class="firm-stat-label">Abogados especialistas</div>
+          </div>
+          <div class="firm-stat">
+            <div class="firm-stat-number">96%</div>
+            <div class="firm-stat-label">Casos resueltos favorablemente</div>
+          </div>
+        </div>
+      </div>
+      <div class="firm-image">
+        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80" alt="Despacho Bufete Velázquez" loading="lazy" />
+        <div class="firm-image-overlay">
+          <h4>Velázquez 48, Madrid</h4>
+          <p>Barrio de Recoletos · Madrid 28001</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="proceso" class="process">
+    <div class="section-header">
+      <span class="section-tag">Nuestro proceso</span>
+      <h2>Cómo trabajamos</h2>
+      <p>Transparencia y claridad en cada etapa del proceso legal.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-number">01</div>
+        <div class="step-content">
+          <h3>Consulta inicial gratuita</h3>
+          <p>Analizamos su caso en una primera reunión confidencial, sin compromiso. Le explicamos las opciones disponibles y los pasos a seguir.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">02</div>
+        <div class="step-content">
+          <h3>Estudio y estrategia jurídica</h3>
+          <p>Nuestro equipo estudia en profundidad su caso, la legislación aplicable y la jurisprudencia relevante para diseñar la mejor estrategia de defensa.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">03</div>
+        <div class="step-content">
+          <h3>Presentación de honorarios</h3>
+          <p>Le presentamos un presupuesto claro y detallado, sin sorpresas. Opciones de financiación disponibles para procedimientos complejos.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">04</div>
+        <div class="step-content">
+          <h3>Ejecución y seguimiento</h3>
+          <p>Iniciamos el procedimiento manteniendo comunicación constante con usted. Recibe informes periódicos del estado de su asunto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contacto" class="contact">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <h2>Solicite su consulta gratuita</h2>
+        <p>El primer paso es siempre una conversación. Contáctenos hoy y un abogado especialista en su área analizará su caso sin compromiso.</p>
+        <div class="contact-detail">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92v2z"/></svg>
+          <a href="tel:+34915901009">91 590 10 09</a>
+        </div>
+        <div class="contact-detail">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:info@bufetevelazquez.es">info@bufetevelazquez.es</a>
+        </div>
+        <div class="contact-detail">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Velázquez 48, 28001 Madrid</span>
+        </div>
+        <div class="contact-detail">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Lun–Vie: 9:00–20:00<br />Urgencias: disponibilidad 24h</span>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Cuéntenos su caso</h3>
+        <form>
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" placeholder="Su nombre completo" />
+          </div>
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="tel" placeholder="6XX XXX XXX" />
+          </div>
+          <div class="form-group">
+            <label>Área jurídica</label>
+            <select>
+              <option value="">Seleccione el área</option>
+              <option>Derecho de Familia</option>
+              <option>Derecho Mercantil</option>
+              <option>Derecho Penal</option>
+              <option>Derecho Inmobiliario</option>
+              <option>Derecho Laboral</option>
+              <option>Extranjería</option>
+              <option>Otros</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Descripción breve del caso</label>
+            <textarea placeholder="Explíquenos brevemente su situación..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Solicitar consulta gratuita</button>
+          <p class="confidentiality">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:3px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Confidencialidad garantizada. Secreto profesional.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo-text">Bufete Velázquez</div>
+    <div>&copy; 2026 Bufete Velázquez Abogados. Todos los derechos reservados.</div>
+    <div>
+      <a href="#">Aviso legal</a> · <a href="#" style="margin-left:0.8rem">Privacidad</a>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    document.querySelector('form').addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = 'Solicitud recibida — le contactamos en breve';
+      btn.style.background = '#2C6E3A';
+      btn.style.color = '#fff';
+      btn.disabled = true;
+    });
+  </script>
+</body>
+</html>
